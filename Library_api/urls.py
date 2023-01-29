@@ -21,6 +21,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/books/", include("book.urls", namespace="book")),
     path("api/customers/", include("Customer.urls", namespace="customer")),
+    path("api/borrowing/"), include("Borrowing.urls", namespace="borrowing"),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
