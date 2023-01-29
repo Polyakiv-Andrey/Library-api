@@ -11,5 +11,5 @@ class BorrowingListSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class BorrowingDitailSerializer(serializers.ModelSerializer):
-    book = BookSerializer(many=False, read_only=True)
+class BorrowingDitailSerializer(BorrowingListSerializer):
+    Book_id = BookSerializer(many=True, read_only=True)
