@@ -9,8 +9,8 @@ class Borrowing(models.Model):
     Borrow_date = models.DateTimeField(null=False, blank=False)
     Expected_return_date = models.DateTimeField(null=False, blank=False)
     Actual_return_date = models.DateTimeField()
-    Book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
-    User_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    Book_id = models.ManyToManyField(Book)
+    User_id = models.ManyToManyField(User)
 
     class Meta:
         constraints = [
