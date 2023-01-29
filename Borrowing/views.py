@@ -11,3 +11,6 @@ class BorrowingViewSet(viewsets.ModelViewSet):
         if self.action == "list":
             return BorrowingListSerializer
         return BorrowingDitailSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(User_id=self.request.user)
