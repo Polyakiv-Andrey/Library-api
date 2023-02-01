@@ -20,6 +20,8 @@ class BorrowingViewSet(viewsets.ModelViewSet):
         serializer.save(User_id=self.request.user)
 
     def get_queryset(self):
-        return self.queryset.filter(User_id=self.request.user)
+        if self.request.user.is_staff is False:
+            return self.queryset.filter(User_id=self.request.user)
+        return self.queryset
 
 
