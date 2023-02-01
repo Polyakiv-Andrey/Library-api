@@ -2,12 +2,12 @@ from rest_framework import viewsets
 
 from Borrowing.models import Borrowing
 from Borrowing.serializers import BorrowingListSerializer, BorrowingDitailSerializer, BorrowingCreateSerializer
-from book.permissions import IsAdminAllowMethodsIsUserAllowListRetrieve
+from Borrowing.permissions import OnlyForAuthenticatedUser
 
 
 class BorrowingViewSet(viewsets.ModelViewSet):
     queryset = Borrowing.objects.all()
-    permission_classes = (IsAdminAllowMethodsIsUserAllowListRetrieve,)
+    permission_classes = (OnlyForAuthenticatedUser,)
 
     def get_serializer_class(self):
         if self.action == "list":
