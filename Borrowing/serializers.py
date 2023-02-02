@@ -1,7 +1,8 @@
+import datetime
+
 from rest_framework import serializers
 
 from Borrowing.models import Borrowing
-from book.models import Book
 from book.serializers import BookSerializer
 
 
@@ -29,3 +30,23 @@ class BorrowingCreateSerializer(BorrowingListSerializer):
         book.Inventory -= 1
         book.save()
         return Borrowing.objects.create(**validated_data)
+
+
+class BorrowingUpdateSerializer(BorrowingListSerializer):
+    Expected_return_date = serializers.DateTimeField(read_only=True)
+    Actual_return_date = serializers.DateTimeField(read_only=True)
+    Book_id = BookSerializer(read_only=True)
+    User_id = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Borrowing
+        fields = "__all__"
+
+    def update(self, instance, validated_data):
+        if instance.Actual_return_date is None:
+            instance.Actual_return_date = datetime.datetime.now()
+            book = instance.Book_id
+            book.Inventory += 1
+            book.save()
+            instance.save()
+        return instance
