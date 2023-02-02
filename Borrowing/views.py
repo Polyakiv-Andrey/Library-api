@@ -2,7 +2,8 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 
 from Borrowing.models import Borrowing
-from Borrowing.serializers import BorrowingListSerializer, BorrowingDitailSerializer, BorrowingCreateSerializer
+from Borrowing.serializers import BorrowingListSerializer, BorrowingDitailSerializer, BorrowingCreateSerializer, \
+    BorrowingUpdateSerializer
 from Borrowing.permissions import OnlyForAuthenticatedUser
 
 
@@ -15,6 +16,8 @@ class BorrowingViewSet(viewsets.ModelViewSet):
             return BorrowingListSerializer
         if self.action == "create":
             return BorrowingCreateSerializer
+        if self.action == "update":
+            return BorrowingUpdateSerializer
         return BorrowingDitailSerializer
 
     def perform_create(self, serializer):
