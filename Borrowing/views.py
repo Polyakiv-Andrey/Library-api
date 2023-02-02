@@ -23,6 +23,9 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_staff is False:
             return self.queryset.filter(User_id=self.request.user)
+        user_id = self.request.query_params.get("user_id")
+        if self.request.user.is_staff and user_id:
+            return self.queryset.filter(User_id=user_id)
         is_active = self.request.query_params.get("is_active")
         if is_active:
             return self.queryset.filter(Actual_return_date=None)
@@ -33,8 +36,14 @@ class BorrowingViewSet(viewsets.ModelViewSet):
             OpenApiParameter(
                 "is_active",
                 type={"type": "list", "items": {"type": "string"}},
-                description="Filtering by return bu with insensitive"
-                            " case (ex. ?is_active=None)",
+                description="Filter by those who returned books"
+                            "(ex. ?is_active=None)",
+            ),
+            OpenApiParameter(
+                "user_id",
+                type={"type": "list", "items": {"type": "integer"}},
+                description="user debt filter"
+                            "(ex. ?user_id=1)",
             ),
             ]
     )
