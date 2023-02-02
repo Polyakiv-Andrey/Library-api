@@ -29,4 +29,3 @@ class BorrowingCreateSerializer(BorrowingListSerializer):
         book.Inventory -= 1
         book.save()
         return Borrowing.objects.create(**validated_data)
-
