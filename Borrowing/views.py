@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 
 from Borrowing.models import Borrowing
@@ -22,9 +23,21 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_staff is False:
             return self.queryset.filter(User_id=self.request.user)
-        is_active = self.request.query_params.get("Actual_return_date")
+        is_active = self.request.query_params.get("is_active")
         if is_active:
             return self.queryset.filter(Actual_return_date=None)
         return self.queryset
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "is_active",
+                type={"type": "list", "items": {"type": "string"}},
+                description="Filtering by return bu with insensitive"
+                            " case (ex. ?is_active=None)",
+            ),
+            ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
