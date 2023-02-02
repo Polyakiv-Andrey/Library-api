@@ -45,5 +45,8 @@ class BorrowingUpdateSerializer(BorrowingListSerializer):
     def update(self, instance, validated_data):
         if instance.Actual_return_date is None:
             instance.Actual_return_date = datetime.datetime.now()
+            book = instance.Book_id
+            book.Inventory += 1
+            book.save()
             instance.save()
         return instance
