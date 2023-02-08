@@ -1,3 +1,5 @@
+import os
+
 import requests
 
 from Customer.models import TelegramChat, User
@@ -11,8 +13,7 @@ def get_chat_user_id(user: User) -> int:
 
 def send_to_telegram(message, user: User):
 
-
-    apiToken = '5627000647:AAEP93ZnHzH_xAG8nYQW-q0yTSZyw4HhO3Y'
+    apiToken = os.environ.get("TELEGRAM_TOKEN")
     chatID = get_chat_user_id(user)
     apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
 

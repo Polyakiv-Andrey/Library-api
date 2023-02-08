@@ -347,3 +347,4 @@ poetry.toml
 
 # ruff
 .ruff_cache/
+.env

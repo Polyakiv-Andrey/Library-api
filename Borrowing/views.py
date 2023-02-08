@@ -1,6 +1,7 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 
+import Customer.models
 from Borrowing.models import Borrowing
 from Borrowing.serializers import BorrowingListSerializer, BorrowingDitailSerializer, BorrowingCreateSerializer, \
     BorrowingUpdateSerializer
@@ -26,11 +27,14 @@ class BorrowingViewSet(viewsets.ModelViewSet):
         serializer.save(User_id=self.request.user)
         book_id = serializer.data["Book_id"]
         book = Book.objects.get(id=book_id)
-        send_to_telegram(
-            message=f"Hi, you borrowed {book.Title}, "
-                    "on site Library.com, nice reading",
-            user=self.request.user
-        )
+        try:
+            send_to_telegram(
+                message=f"Hi, you borrowed {book.Title}, "
+                        "on site Library.com, nice reading",
+                user=self.request.user
+            )
+        except Customer.models.TelegramChat.DoesNotExist:
+            pass
 
     def get_queryset(self):
         if self.request.user.is_staff is False:
