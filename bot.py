@@ -45,12 +45,12 @@ async def login(msg: types.Message):
 
 @dp.message_handler(commands=['logout'])
 async def logout_command(message: types.Message):
-    try:
-        chat = TelegramChat.objects.get(chat_id=message.from_user.id)
-        chat.delete()
-        await bot.send_message(message.from_user.id, "logged out")
-    except:
-        await bot.send_message(message.from_user.id, "not login yet")
+    # try:
+    chat = TelegramChat.objects.get(chat_id=message.from_user.id)
+    chat.delete()
+    await bot.send_message(message.from_user.id, "logged out")
+    # except:
+    #     await bot.send_message(message.from_user.id, "not login yet")
 
 
 if __name__ == '__main__':
