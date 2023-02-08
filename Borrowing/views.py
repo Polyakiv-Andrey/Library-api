@@ -5,6 +5,7 @@ from Borrowing.models import Borrowing
 from Borrowing.serializers import BorrowingListSerializer, BorrowingDitailSerializer, BorrowingCreateSerializer, \
     BorrowingUpdateSerializer
 from Borrowing.permissions import OnlyForAuthenticatedUser
+from messager import send_to_telegram
 
 
 class BorrowingViewSet(viewsets.ModelViewSet):
@@ -22,6 +23,7 @@ class BorrowingViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(User_id=self.request.user)
+        send_to_telegram(message=1, user=self.request.user)
 
     def get_queryset(self):
         if self.request.user.is_staff is False:

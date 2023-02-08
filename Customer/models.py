@@ -48,3 +48,8 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+
+class TelegramChat(models.Model):
+    chat_id = models.IntegerField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
