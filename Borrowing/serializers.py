@@ -1,14 +1,9 @@
-import asyncio
 import datetime
 
 from rest_framework import serializers
 
-
-# from bot import bot, message_about_borrowing, users
 from Borrowing.models import Borrowing
 from book.serializers import BookSerializer
-
-# DJANGO_SETTINGS_MODULE = "Library_api.settings"
 
 
 class BorrowingListSerializer(serializers.ModelSerializer):
