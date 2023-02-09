@@ -13,12 +13,15 @@ def get_chat_user_id(user: User) -> int:
 
 def send_to_telegram(message, user: User):
 
-    apiToken = os.environ.get("TELEGRAM_TOKEN")
-    chatID = get_chat_user_id(user)
-    apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
+    api_token = os.environ.get("TELEGRAM_TOKEN")
+    chat_id = get_chat_user_id(user)
+    api_url = f'https://api.telegram.org/bot{api_token}/sendMessage'
 
     try:
-        response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
+        response = requests.post(
+            api_url,
+            json={'chat_id': chat_id, 'text': message}
+        )
         print(response.text)
     except Exception as e:
         print(e)
